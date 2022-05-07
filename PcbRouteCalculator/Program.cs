@@ -11,27 +11,15 @@ namespace PcbRouteCalculator
         static UserInteractor userInteractor = new UserInteractor();
         static Calculator pcbCalculator = new Calculator();
 
-        static void Main(string[] args)
+        static void Main()
         {
-            double current = 0.0;
-            double onca = 0.0;
-            double comprimentoDoCondutor = 0.0;
-            double temperatureVariation;
-            int trailOption;
-
-
             layoutManager.Start();
             userInteractor.Greet();
-
-
             userInteractor.ShowOptions();
 
-            int choosenOption = userInteractor.GetNumberInformation();
-
-            if (choosenOption == 1)
+            if (getAplicationFlow() == AplicationFlow.Current)
             {
                 double value = pcbCalculator.currentThroughTrail(userInteractor.getCurrentInformation());
-
                 Console.WriteLine(value + " MILS");
             } else
             {
@@ -41,4 +29,5 @@ namespace PcbRouteCalculator
             Console.ReadKey();
         }
     }
+
 }

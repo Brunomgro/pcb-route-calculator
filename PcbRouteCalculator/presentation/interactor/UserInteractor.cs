@@ -31,7 +31,7 @@ namespace PcbUserInteractor
             Console.BackgroundColor = ConsoleColor.DarkBlue;
         }
 
-        public int GetNumberInformation()
+        static public int GetNumberInformation()
         {
             int value = 0;
 
@@ -125,5 +125,28 @@ namespace PcbUserInteractor
         {
             Console.WriteLine(messages.toCalculateCurrent);
         }
+
+        static public AplicationFlow getAplicationFlow()
+        {
+            int choosenOption = GetNumberInformation();
+            AplicationFlow flow;
+
+            if (choosenOption == 1)
+            {
+                flow = AplicationFlow.Current;
+            }
+            else
+            {
+                flow = AplicationFlow.Area;
+            }
+
+            return flow;
+        }
+    }
+
+    enum AplicationFlow
+    {
+        Current,
+        Area
     }
 }
