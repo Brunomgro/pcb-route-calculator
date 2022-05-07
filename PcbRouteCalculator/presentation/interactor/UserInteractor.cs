@@ -1,6 +1,7 @@
 ﻿using System;
 using MessagesProvider;
 using CurrentInformation;
+using AreaInformation;
 
 namespace PcbUserInteractor
 {
@@ -26,9 +27,16 @@ namespace PcbUserInteractor
         {
             Console.BackgroundColor = ConsoleColor.Red;
             Console.WriteLine(messages.genericError);
+            Console.BackgroundColor = ConsoleColor.Black;
 
-            Console.ReadKey();
-            Console.BackgroundColor = ConsoleColor.DarkBlue;
+        }
+
+        public void NotYetSuportedAlert()
+        {
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.WriteLine(messages.notYetSuported);
+            Console.BackgroundColor = ConsoleColor.Black;
+
         }
 
         static public int GetNumberInformation()
@@ -54,15 +62,31 @@ namespace PcbUserInteractor
             return currentInformations;
         }
 
+        public AreaInformations getTrailInformation()
+        {
+            showMessageToCurrentThroughArea();
+
+            AreaInformations currentInformations = new AreaInformations(
+                getLenghInfo(),
+                getCurrentInfo(),
+                getOncaInfo(),
+                getTemperatureVariation(),
+                getTrailInfo()
+            );
+
+            return currentInformations;
+        }
+
         TrailType getTrailInfo()
         {
             int choosenTrail;
             TrailType trailType;
 
-            showMessage("\ntrilha:");
+            showMessage("trilha:");
             showMessage("1 - externa");
             showMessage("2 - interna");
             int.TryParse(Console.ReadLine(), out choosenTrail);
+            Console.WriteLine();
 
             if (choosenTrail == 1)
             {
@@ -73,13 +97,14 @@ namespace PcbUserInteractor
                 trailType = TrailType.Internal;
             }
 
+
             return trailType;
         }
 
         double getCurrentInfo()
         {
             double current = 0.0;
-            showInlineMessage("corrente: ");
+            showInlineMessage("corrente em Amperes: ");
             double.TryParse(Console.ReadLine(), out current);
 
             return current;
@@ -88,7 +113,7 @@ namespace PcbUserInteractor
         double getOncaInfo()
         {
             double onca = 0.0;
-            showInlineMessage("\nonça: ");
+            showInlineMessage("espessura do cobre em onças: ");
             double.TryParse(Console.ReadLine(), out onca);
 
             return onca;
@@ -97,7 +122,7 @@ namespace PcbUserInteractor
         double getLenghInfo()
         {
             double comprimentoDoCondutor = 0.0;
-            showInlineMessage("\ncomprimento do condutor: ");
+            showInlineMessage("comprimento do condutor em milimetros: ");
             double.TryParse(Console.ReadLine(), out comprimentoDoCondutor);
 
             return comprimentoDoCondutor;
@@ -106,7 +131,7 @@ namespace PcbUserInteractor
         double getTemperatureVariation()
         {
             double temperatureVariation = 0.0;
-            showInlineMessage("\nvariação da temperatura: ");
+            showInlineMessage("variação da temperatura em °C: ");
             double.TryParse(Console.ReadLine(), out temperatureVariation);
 
             return temperatureVariation;
@@ -114,7 +139,7 @@ namespace PcbUserInteractor
 
         public void showMessage(String message)
         {
-            Console.WriteLine(message+"\n");
+            Console.WriteLine(message);
         }
 
         public void showInlineMessage(String message)
@@ -126,9 +151,10 @@ namespace PcbUserInteractor
             Console.WriteLine(messages.toCalculateCurrent);
         }
 
-        static public AplicationFlow getAplicationFlow()
+        public AplicationFlow getAplicationFlow()
         {
             int choosenOption = GetNumberInformation();
+            Console.WriteLine();
             AplicationFlow flow;
 
             if (choosenOption == 1)
@@ -137,7 +163,14 @@ namespace PcbUserInteractor
             }
             else
             {
-                flow = AplicationFlow.Area;
+                if (choosenOption == 2)
+                {
+                    flow = AplicationFlow.Area;
+                }
+                else
+                {
+                    flow = AplicationFlow.notChosen;
+                }
             }
 
             return flow;
@@ -147,6 +180,7 @@ namespace PcbUserInteractor
     enum AplicationFlow
     {
         Current,
-        Area
+        Area,
+        notChosen
     }
 }

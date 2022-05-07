@@ -6,7 +6,6 @@ namespace PcbLayoutManager
     {
         public void Start()
         {
-            Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.ForegroundColor = ConsoleColor.Yellow;
         }
     }

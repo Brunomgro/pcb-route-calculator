@@ -1,17 +1,18 @@
 ﻿using System;
 using CurrentInformation;
+using AreaInformation;
 
 namespace PcbCalculator
 {
     class Calculator
     {
-        public double AreaAtravesDaCorrente(double current)
+        public double currentThroughTrail1(AreaInformations areaInformations)
         {
 
-            return current;
+            return areaInformations.current;
         }
 
-        public double currentThroughTrail(CurrentInformations currentInformations)
+        public double areaThroughCurrent(CurrentInformations currentInformations)
         {
             double constanteDaTrilha;
             if (currentInformations.trailType == TrailType.External)
